@@ -108,5 +108,5 @@ export const fa = {
   select:'انتخابی',
   text:'متنی',
   notUsed:'بدون خروجی',
-
+  messages:'صندق پیام‌ها',
 };

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'UserInterface'      => 'ناحیه کاربری',
+    'UserInterface' => 'ناحیه کاربری',
     'home'  => 'داشبورد',
     'SystemManagement'     => 'مدیریت سامانه',
     'AccessLevel'  => 'سطح دسترسی',
@@ -10,4 +10,5 @@ return [
     'departments' => 'دپارتمان',
     'cogs' => 'تنظیمات',
     'BackUpAction'=>'مدیریت دیتابیس',
+    'messages' => 'صندق پیام‌ها',
 ];
