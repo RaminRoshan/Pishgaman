@@ -10,5 +10,8 @@ return [
     'departments' => 'دپارتمان',
     'cogs' => 'تنظیمات',
     'BackUpAction'=>'مدیریت دیتابیس',
-    'messages' => 'صندق پیام‌ها',
+    'messages' => 'کارتابل',
+    'baraavardyaar'=>'برآوردیار',
+    'biston'=>'بیستون',
+    'Links'=>'لینک‌ها'    
 ];

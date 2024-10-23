@@ -170,9 +170,10 @@ export const globalMixin = {
     
       Swal.fire({
         icon: 'error',
-        title,
-        text,
-        confirmButtonText: 'Ok',
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        timer: 3000
       });
     },
   },

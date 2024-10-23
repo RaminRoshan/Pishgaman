@@ -94,8 +94,8 @@ class FontVariables
 
 			'fontdata' => [
 				"dejavusanscondensed" => [
-					'R' => "DejaVuSansCondensed.ttf",
-					'B' => "DejaVuSansCondensed-Bold.ttf",
+					'R' => "IRANSans.ttf",
+					'B' => "IRANSans_Bold.ttf",
 					'I' => "DejaVuSansCondensed-Oblique.ttf",
 					'BI' => "DejaVuSansCondensed-BoldOblique.ttf",
 					'useOTL' => 0xFF,

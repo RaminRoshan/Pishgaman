@@ -109,4 +109,7 @@ export const fa = {
   text:'متنی',
   notUsed:'بدون خروجی',
   messages:'صندق پیام‌ها',
+  baraavardyaar:'برآوردیار',
+  biston:'بیستون',
+  Links:'لینک‌ها'
 };

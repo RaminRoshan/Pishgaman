@@ -5,6 +5,7 @@ namespace Pishgaman\Pishgaman\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Pishgaman\Pishgaman\Repositories\downloadRepository;
+use Pishgaman\Pishgaman\Database\Models\Messages\Attachment;
 
 class DownloadController extends Controller
 {
@@ -27,6 +28,17 @@ class DownloadController extends Controller
         return response()->download(
             storage_path('app/public/' . $downloadList->file_path),
             $downloadList->file_name,
+            [],
+            'inline'
+        );
+    }
+    
+    public function downloadMsgAttachment(Request $request)
+    {
+        $Attachment = Attachment::find($request->id);
+        return response()->download(
+            storage_path('app/public/' . $Attachment->file_path),
+            $Attachment->file_name,
             [],
             'inline'
         );

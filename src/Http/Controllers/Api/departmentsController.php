@@ -67,9 +67,22 @@ class departmentsController extends Controller
             return response()->json(['errors' => 'requestNotAllowed'], 422);
         }
 
-        $deps = Department::get();
+        $deps = Department::orderby('name');
+        $deps = $deps->where('pid',$request->pid ?? null);
+        $deps= $deps->get();
 
-        return response()->json(['deps'=>$deps], 200);   
+        if($request->pid != null)
+        {
+            $pDep = Department::where('id',$request->pid ?? null)->first();
+            $beforPage = $pDep->pid;
+        }
+        else
+        {
+            $beforPage = null;
+        }
+
+
+        return response()->json(['deps'=>$deps,'beforPage'=>$beforPage], 200);   
     
     }    
 
@@ -160,7 +173,9 @@ class departmentsController extends Controller
     
         if($user)
         {
-            if(DepartmentUser::where('user_id',$user->id)->count() > 0)
+            if(DepartmentUser::where('user_id', $user->id)
+            ->where('department_id', $request->dep_id)
+            ->exists())
             {
                 return response()->json(['errors' => 'کاربر قبلا به عنوان کارمند این دپارتمان اضافه شده است'], 422);   
             }

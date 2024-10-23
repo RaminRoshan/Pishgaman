@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->string('letter_number')->nullable();
             $table->unsignedBigInteger('pid')->nullable();
             $table->string('message_type');
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('recipient_id');
-            $table->string('subject');
-            $table->text('body');
+            $table->LongText('subject');
+            $table->LongText('body');
             $table->foreign('sender_id')->references('id')->on('users');
             $table->foreign('recipient_id')->references('id')->on('users');
             $table->timestamp('sender_deleted_at')->nullable();
             $table->timestamp('recipient_deleted_at')->nullable(); 
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
         });

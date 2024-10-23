@@ -6,23 +6,9 @@
           <div class="col-md-2 mb-2"> 
             <button class="btn btn-primary" data-bs-toggle="modal" data-toggle="modal" data-bs-target="#addNewDep" data-target="#addNewDep"><i class="fa fa-plus"></i> دپارتمان جدید</button>
           </div>
-          <div class="col-md-4 mb-2">   
-              <input type="text" class="form-control" id="searchQuery" v-model="searchQuery" placeholder="جستجو " autocomplete="off">  
-          </div>
           <div class="col-md-2 mb-2">
-            <select class="form-control" id="itemsPerPage" v-model="itemsPerPage">
-              <option value="5">5 مورد در صفحه</option>
-              <option value="10">10 مورد در صفحه</option>
-              <option value="20">20 مورد در صفحه</option>
-              <option value="30">30 مورد در صفحه</option>
-              <option value="40">40 مورد در صفحه</option>
-              <option value="50">50 مورد در صفحه</option>
-              <option value="100">100 مورد در صفحه</option>
-            </select>
-          </div>
-          <div class="col-md-2 mb-2">
-              <button class="btn btn-info btn-block" @click="getDeps()"><i class="fa fa-search"></i></button>
-          </div>          
+              <button class="btn btn-warning btn-block" @click="getDeps(beforPage);newPid = beforPage" style="margin-right:5px;"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+          </div>    
         </div>          
       </div>            
     </div>
@@ -36,7 +22,7 @@
                 <th>منو</th>
               </tr>
               <tr v-for="item in deps">
-                <td>{{ item.name }}</td>
+                <td><button class="btn btn-link" @click="getDeps(item.id);newPid = item.id">{{ item.name }}</button></td>
                 <td>
                     <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
@@ -209,6 +195,9 @@ export default {
 
       employee_username:'',
       DepartmentUser:[],
+
+      beforPage:'',
+      newPid:null,
     };
   },
   components: {
@@ -229,11 +218,15 @@ export default {
           data: { action, id }
         }).then(response => {
           this.getEmployeeDeps();
-          Swal.fire(
-            'ویرایش شد!',
-            'مدیر دپارتمان با موفقیت ثبت شد',
-            'success'
-          );          
+          Swal.fire({
+            icon: 'success',
+            title: 'ویرایش شد!',
+            text: 'مدیر دپارتمان با موفقیت ثبت شد',
+            showConfirmButton: false,
+            timer: 3000
+          });
+      
+             
         }).catch(error => {
           this.checkError(error);
         });
@@ -254,7 +247,7 @@ export default {
           headers: {'Authorization': `Bearer ${token}`},
           data: { action, dep_name, dep_id }
         }).then(response => {
-          this.getDeps();
+          this.getDeps(this.newPid);
           Swal.fire(
             'ویرایش شد!',
             'دپارتمان با موفقیت ویرایش شد.',
@@ -279,7 +272,7 @@ export default {
           data: { 'action': action, 'dep_id':dep_id}
         }).then(response => {
           this.searchQuery = '';
-          this.getDeps();
+          this.getDeps(this.newPid)
           Swal.fire(
             'حذف شد!',
             'دپارتمان با موفقیت حذف شد.',
@@ -308,16 +301,19 @@ export default {
         }
       });
     },    
-    getDeps()
+    getDeps(pid='')
     {
+      if(pid == null)
+        pid = '';
       axios.get(this.getAppUrl() + 'sanctum/getToken').then(response => {
         const token = response.data.token;
         axios.request({
           method: 'GET',
-          url: this.getAppUrl() + 'api/admin/departments?action=getDeps',
+          url: this.getAppUrl() + 'api/admin/departments?action=getDeps&pid='+pid,
           headers: {'Authorization': `Bearer ${token}`}
         }).then(response => {
           this.deps = response.data.deps;
+          this.beforPage = response.data.beforPage;
         }).catch(error => {
           this.checkError(error);
         });
@@ -330,15 +326,16 @@ export default {
       axios.get(this.getAppUrl() + 'sanctum/getToken').then(response => {
         const token = response.data.token;
         const action = 'saveNewDep';
-        const pid = this.pid;
+        const pid = this.newPid;
         const dep_name = this.new_dep_name;
+        const newPid = this.newPid;
         axios.request({
           method: 'POST', // از PUT برای ویرایش استفاده می‌کنیم
           url: this.getAppUrl() + 'api/admin/departments',
           headers: {'Authorization': `Bearer ${token}`},
-          data: { action, pid, dep_name }
+          data: { action, pid, dep_name , newPid}
         }).then(response => {
-          this.getDeps()
+          this.getDeps(this.newPid)
           Swal.fire(
             'ثبت شد!',
             'دپارتمان با موفقیت ثبت شد',

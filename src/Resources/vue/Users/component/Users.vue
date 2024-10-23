@@ -4,7 +4,7 @@
       <div class="card-body text-left">
         <div class="form-row row">
           <div class="col-md-2 mb-2">      
-            <button class="btn btn-primary" data-toggle="modal" data-target="#createdUser"><i class="fa fa-plus"></i> ایجاد کاربر جدید</button>
+            <button class="btn btn-primary"   data-bs-toggle="modal" data-toggle="modal" data-bs-target="#createdUser" data-target="#createdUser"><i class="fa fa-plus"></i> ایجاد کاربر جدید</button>
           </div>
           <div class="col-md-4 mb-3">   
             <input type="text" class="form-control" id="searchQuery" v-model="searchQuery" placeholder="جستجو کاربر" autocomplete="off">  

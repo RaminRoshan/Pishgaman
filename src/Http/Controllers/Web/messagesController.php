@@ -9,7 +9,7 @@ class messagesController extends Controller
 {
     // Valid and safe actions that can be executed
     private $validActions = [
-        'departments',
+        'Messages',
     ];
 
     protected $user;
